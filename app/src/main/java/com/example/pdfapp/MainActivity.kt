@@ -1,32 +1,4 @@
 package com.example.pdfapp
-//
-//import android.content.res.AssetManager
-//import android.os.Bundle
-//import androidx.appcompat.app.AppCompatActivity
-//import androidx.recyclerview.widget.LinearLayoutManager
-//import androidx.recyclerview.widget.RecyclerView
-//
-//class MainActivity : AppCompatActivity() {
-//
-//    private lateinit var recyclerView: RecyclerView
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
-//
-//        recyclerView = findViewById(R.id.recyclerView)
-//        recyclerView.layoutManager = LinearLayoutManager(this)
-//
-//        val assets: AssetManager = applicationContext.assets
-//        val files: Array<String>? = assets.list("man")
-//        if (files != null) {
-//            recyclerView.adapter = FileAdapter(files.toList(),this)
-//        } else {
-//            println("No files found")
-//        }
-//
-//    }
-//}
 
 import android.content.res.AssetManager
 import android.os.Bundle
