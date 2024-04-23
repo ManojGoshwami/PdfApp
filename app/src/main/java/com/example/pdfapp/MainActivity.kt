@@ -1,51 +1,71 @@
 package com.example.pdfapp
+//
+//import android.content.res.AssetManager
+//import android.os.Bundle
+//import androidx.appcompat.app.AppCompatActivity
+//import androidx.recyclerview.widget.LinearLayoutManager
+//import androidx.recyclerview.widget.RecyclerView
+//
+//class MainActivity : AppCompatActivity() {
+//
+//    private lateinit var recyclerView: RecyclerView
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContentView(R.layout.activity_main)
+//
+//        recyclerView = findViewById(R.id.recyclerView)
+//        recyclerView.layoutManager = LinearLayoutManager(this)
+//
+//        val assets: AssetManager = applicationContext.assets
+//        val files: Array<String>? = assets.list("man")
+//        if (files != null) {
+//            recyclerView.adapter = FileAdapter(files.toList(),this)
+//        } else {
+//            println("No files found")
+//        }
+//
+//    }
+//}
 
+import android.content.res.AssetManager
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.github.barteksc.pdfviewer.PDFView
-import java.io.FileNotFoundException
+import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var searchEditText: EditText
-    private lateinit var pdfView: PDFView
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var fileAdapter: FileAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        searchEditText = findViewById(R.id.searchEditText)
-        pdfView=findViewById(R.id.pdfView)
+        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
+        val assets: AssetManager = applicationContext.assets
+        val files: Array<String>? = assets.list("man")
+        if (files != null) {
+            fileAdapter = FileAdapter(this, files.toList())
+            recyclerView.adapter = fileAdapter
+        } else {
+            println("No files found")
+        }
 
-
-
-        searchEditText.setOnEditorActionListener { _, _, _ ->
-            if (!searchEditText.text.isEmpty()){
-                searchPDF()
+        val searchView: SearchView = findViewById(R.id.searchView)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
             }
 
-            true
-        }
-    }
-
-    private fun searchPDF() {
-        val searchTerm = searchEditText.text.toString().trim().toLowerCase()
-        val pdfFileName = "$searchTerm.pdf"
-        val assetManager = this.assets
-//        val inputStream = assetManager.open(pdfFileName)
-//        pdfView.fromStream(inputStream).load()
-
-        try {
-            val inputStream = assetManager.open(pdfFileName)
-            pdfView.fromStream(inputStream).load()
-//            val inputStream = assets.open(pdfFileName)
-//            pdfView.fromStream(inputStream).load()
-        } catch (e: FileNotFoundException) {
-            Toast.makeText(this, "PDF not found", Toast.LENGTH_SHORT).show()
-        }
-
+            override fun onQueryTextChange(newText: String): Boolean {
+                fileAdapter.filter(newText)
+                return true
+            }
+        })
     }
 }

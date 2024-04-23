@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="dark_theme_color">#2F4F4F</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_btn_color">#3F51B5</color>
+    <color name="bg_color">#F7FFFFFF</color>
+    <color name="bg_road_cast">#0f7cb1</color>
 </resources>
